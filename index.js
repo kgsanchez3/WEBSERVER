@@ -1,30 +1,27 @@
 // index.js
-// where your node app starts
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const app = express();
 
-// init project
-require('dotenv').config();
-var express = require('express');
-var app = express();
-
-// enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
-// so that your API is remotely testable by FCC
-var cors = require('cors');
+// enable CORS so your API is remotely testable by FCC
 app.use(cors({ optionsSuccessStatus: 200 })); // some legacy browsers choke on 204
 
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
+// serve static files (optional, for any public files you might have)
+app.use(express.static("public"));
 
-// http://expressjs.com/en/starter/basic-routing.html
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
+// basic root endpoint
+app.get("/", (req, res) => {
+  res.json({ message: "Request Header Parser Microservice is working!" });
 });
 
-// your first API endpoint...
-app.get('/api/hello', function (req, res) {
-  res.json({ greeting: 'hello API' });
+// example API endpoint
+app.get("/api/hello", (req, res) => {
+  res.json({ greeting: "hello API" });
 });
 
-// listen for requests :)
-var listener = app.listen(process.env.PORT || 3000, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
+// listen for requests on the port assigned by Render
+const listener = app.listen(process.env.PORT || 3000, () => {
+  console.log("Your app is listening on port " + listener.address().port);
 });
+
