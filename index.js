@@ -1,3 +1,4 @@
+// index.js
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -32,8 +33,7 @@ app.get("/api/whoami", (req, res) => {
   });
 });
 
-// listen on assigned port
+// listen on the port assigned by Render
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });
-Write to Katherine Sanchez
