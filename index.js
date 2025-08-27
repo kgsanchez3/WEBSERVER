@@ -1,27 +1,39 @@
-// index.js
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
 
-// enable CORS so your API is remotely testable by FCC
-app.use(cors({ optionsSuccessStatus: 200 })); // some legacy browsers choke on 204
+// enable CORS
+app.use(cors({ optionsSuccessStatus: 200 }));
 
-// serve static files (optional, for any public files you might have)
+// serve static files (optional)
 app.use(express.static("public"));
 
-// basic root endpoint
+// root endpoint
 app.get("/", (req, res) => {
   res.json({ message: "Request Header Parser Microservice is working!" });
 });
 
-// example API endpoint
+// example endpoint
 app.get("/api/hello", (req, res) => {
   res.json({ greeting: "hello API" });
 });
 
-// listen for requests on the port assigned by Render
+// FCC Request Header Parser endpoint
+app.get("/api/whoami", (req, res) => {
+  const ipaddress = req.ip || req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const language = req.headers["accept-language"];
+  const software = req.headers["user-agent"];
+
+  res.json({
+    ipaddress,
+    language,
+    software
+  });
+});
+
+// listen on assigned port
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });
-
+Write to Katherine Sanchez
